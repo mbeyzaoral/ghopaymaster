@@ -3,9 +3,9 @@ pragma solidity ^0.8.12;
 
 /* solhint-disable reason-string */
 
-import "@openzeppelin-contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interfaces/IPaymaster.sol";
-import "../interfaces/IEntryPoint.sol";
+import "../Interfaces/IEntryPoint.sol";
 import "../Helpers.sol";
 
 /**
