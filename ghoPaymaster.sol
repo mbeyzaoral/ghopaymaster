@@ -43,7 +43,7 @@ contract GhoPaymaster is BasePaymaster {
             ghoToken,
             userOp.sender,
             address(this),
-            tokenAmount
+            approvedAmount
         );
 
         bytes context = abi.encode(
