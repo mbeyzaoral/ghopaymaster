@@ -38,7 +38,7 @@ contract GhoPaymaster is BasePaymaster {
         uint256 gasPriceUserOp = userOp.gasPrice();
         uint256 maxTokenCost = getTokenValueOfEth(maxCost);
         uint256 approvedAmount = ghoToken.allowance(account, address(this));
-
+        require(approvedAmount >= maxTokenCost, "Balance is not sufficent");
         SafeERC20.safeTransferFrom(
             ghoToken,
             userOp.sender,
