@@ -29,6 +29,7 @@ contract GhoPaymaster is BasePaymaster {
         ghoToken = IERC20(ghoTokenAddress);
     }
 
+    // validate yapıp kullanıcının tokenını paymastera alıyor
     function _validatePaymasterUserOp(
         UserOperation calldata userOp,
         uint256 maxCost
@@ -36,9 +37,10 @@ contract GhoPaymaster is BasePaymaster {
         address account = userOp.getSender();
         uint256 gasPriceUserOp = userOp.gasPrice();
         uint256 maxTokenCost = getTokenValueOfEth(maxCost);
+        uint256 approvedAmount = ghoToken.allowance(account, address(this));
 
         SafeERC20.safeTransferFrom(
-            token,
+            ghoToken,
             userOp.sender,
             address(this),
             tokenAmount
@@ -54,9 +56,17 @@ contract GhoPaymaster is BasePaymaster {
         return (context, validationData);
     }
 
+    function _postOp(
+        PostOpMode mode,
+        bytes calldata context,
+        uint256 actualGasCost
+    ) internal override {
+        // buraya ne yazacağım abla
+    }
+
     function getTokenValue(uint amount) public view returns (uint256) {
         uint256 ethPrice = oracle.getPrice();
-        return (ethPrice * ethAmount) / 1000000000000000000;
+        return (ethPrice * amount) / 1000000000000000000;
     }
 
     receive() external payable {}
